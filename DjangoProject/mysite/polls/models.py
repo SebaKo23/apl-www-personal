@@ -4,8 +4,6 @@ from django.utils import timezone
 
 MONTHS = models.IntegerChoices('Miesiace', 'Styczeń Luty Marzec Kwiecień Maj Czerwiec Lipiec Sierpień Wrzesień Październik Listopad Grudzień')
 
-GENDERS = models.IntegerChoices('Plec', 'Kobieta Mezczyzna Inna')
-
 SHIRT_SIZES = (
         ('S', 'Small'),
         ('M', 'Medium'),
@@ -49,9 +47,18 @@ class Stanowisko(models.Model):
 
 
 class Osoba(models.Model):
+    class Plec(models.IntegerChoices):
+        mezczyzna = 1, 'Mezczyzna'
+        kobieta = 2, 'Kobieta'
+        inne = 3, 'Inne'
+    class Meta:
+        ordering = ['nazwisko']
 
     imie = models.CharField(max_length=60, blank=False, null=False)
     nazwisko = models.CharField(max_length=60, blank=False, null=False)
-    plec = models.IntegerField(choices=GENDERS.choices, default=GENDERS.choices[0][0])
-    stanowisko = models.ForeignKey('Stanowisko', db_column='Stanowisko_nazwa', null=False, on_delete=models.DO_NOTHING)
+    plec = models.IntegerField(choices=Plec.choices, default=Plec.mezczyzna)
+    stanowisko = models.ForeignKey('Stanowisko', db_column='Stanowisko_nazwa', null=False, on_delete=models.CASCADE)
+    data_dodania = models.DateField(auto_now_add=True)
 
+    def __str__(self):
+        return f"{self.imie} {self.nazwisko}"
