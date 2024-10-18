@@ -1,138 +1,59 @@
-# Django #
+# Virtual environment
+venv/
+env/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff:
 *.log
 *.pot
 *.pyc
-__pycache__
+*.pyo
+*.sqlite3
 db.sqlite3
-media
+*.pkl
 
-# Backup files # 
-*.bak 
+# PyCharm project files
+.idea/
 
-# If you are using PyCharm # 
-# User-specific stuff
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/**/usage.statistics.xml
-.idea/**/dictionaries
-.idea/**/shelf
+# If you're using Django Debug Toolbar
+debug.log
 
-# AWS User-specific
-.idea/**/aws.xml
+# Local env files
+.env
+*.env
 
-# Generated files
-.idea/**/contentModel.xml
+# Django static and media files
+/static/
+/media/
 
-# Sensitive or high-churn files
-.idea/**/dataSources/
-.idea/**/dataSources.ids
-.idea/**/dataSources.local.xml
-.idea/**/sqlDataSources.xml
-.idea/**/dynamic.xml
-.idea/**/uiDesigner.xml
-.idea/**/dbnavigator.xml
+# Node modules (if using npm or yarn)
+node_modules/
 
-# Gradle
-.idea/**/gradle.xml
-.idea/**/libraries
+# pyenv
+.python-version
 
-# File-based project format
-*.iws
+# Celery beat schedule files
+celerybeat-schedule
 
-# IntelliJ
-out/
+# pytest
+.cache
 
-# JIRA plugin
-atlassian-ide-plugin.xml
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
 
-# Python # 
-*.py[cod] 
-*$py.class 
+# MyPy
+.mypy_cache/
 
-# Distribution / packaging 
-.Python build/ 
-develop-eggs/ 
-dist/ 
-downloads/ 
-eggs/ 
-.eggs/ 
-lib/ 
-lib64/ 
-parts/ 
-sdist/ 
-var/ 
-wheels/ 
-*.whl
-*.egg-info/ 
-.installed.cfg 
-*.egg 
-*.manifest 
-*.spec 
+# Bandit security linter
+.bandit/
 
-# Installer logs 
-pip-log.txt 
-pip-delete-this-directory.txt 
-
-# Unit test / coverage reports 
-htmlcov/ 
-.tox/ 
-.coverage 
-.coverage.* 
-.cache 
-.pytest_cache/ 
-nosetests.xml 
-coverage.xml 
-*.cover 
-.hypothesis/ 
-
-# Jupyter Notebook 
-.ipynb_checkpoints 
-
-# pyenv 
-.python-version 
-
-# celery 
-celerybeat-schedule.* 
-
-# SageMath parsed files 
-*.sage.py 
-
-# Environments 
-.env 
-.venv 
-env/ 
-venv/ 
-ENV/ 
-env.bak/ 
-venv.bak/ 
-
-# mkdocs documentation 
-/site 
-
-# mypy 
-.mypy_cache/ 
-
-# Sublime Text # 
-*.tmlanguage.cache 
-*.tmPreferences.cache 
-*.stTheme.cache 
-*.sublime-workspace 
-*.sublime-project 
-
-# sftp configuration file 
-sftp-config.json 
-
-# Package control specific files Package 
-Control.last-run 
-Control.ca-list 
-Control.ca-bundle 
-Control.system-ca-bundle 
-GitHub.sublime-settings 
-
-# Visual Studio Code # 
-.vscode/* 
-!.vscode/settings.json 
-!.vscode/tasks.json 
-!.vscode/launch.json 
-!.vscode/extensions.json 
-.history
+# Build files
+build/
+dist/
+*.egg-info/
