@@ -1,6 +1,8 @@
 from random import choices
 
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
+from datetime import date
 from .models import Osoba, Stanowisko
 
 class OsobaSerializer(serializers.Serializer):
@@ -23,6 +25,21 @@ class OsobaSerializer(serializers.Serializer):
         instance.data_dodania = validated_data.get('data_dodania', instance.data_dodania)
         instance.save()
         return instance
+
+    def validate_imie(self, value):
+        if not value.isalpha():
+            raise serializers.ValidationError("Pole 'imie' powinno zawierać tylko litery!")
+        return value
+
+    def validate_nazwisko(self, value):
+        if not value.isalpha():
+            raise serializers.ValidationError("Pole 'nazwisko' powinno zawierać tylko litery!")
+        return value
+
+    def validate_data_dodania(self, value):
+        if value > date.today():
+            raise ValidationError("Data nie może być z przyszłości!")
+        return value
 
 class StanowiskoModelSerializer(serializers.ModelSerializer):
     class Meta:
