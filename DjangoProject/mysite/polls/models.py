@@ -1,6 +1,7 @@
 import datetime
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 MONTHS = models.IntegerChoices('Miesiace', 'Styczeń Luty Marzec Kwiecień Maj Czerwiec Lipiec Sierpień Wrzesień Październik Listopad Grudzień')
 
@@ -59,6 +60,7 @@ class Osoba(models.Model):
     plec = models.IntegerField(choices=Plec.choices, default=Plec.mezczyzna)
     stanowisko = models.ForeignKey('Stanowisko', db_column='Stanowisko_nazwa', null=False, on_delete=models.CASCADE)
     data_dodania = models.DateField(default=timezone.now)
+    wlasciciel = models.ForeignKey(User, on_delete=models.CASCADE, related_name="osoba")
 
     def __str__(self):
         return f"{self.imie} {self.nazwisko}"
