@@ -2,17 +2,23 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.authentication import BasicAuthentication, SessionAuthentication, TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 from rest_framework.response import Response
 from .models import Osoba, Stanowisko
 from .serializers import OsobaSerializer, StanowiskoModelSerializer
+from django.core.exceptions import PermissionDenied
 
 @api_view(['GET'])
 def osoba_detail(request, pk):
+    if not request.user.has_perm('polls.view_osoba'):
+        raise PermissionDenied()
     try:
         osoba = Osoba.objects.get(pk=pk)
     except Osoba.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if osoba.wlasciciel != request.user and not request.user.has_perm('polls.can_view_other_persons'):
+        raise PermissionDenied("Nie masz uprawnień, aby zobaczyć ten obiekt.")
 
     if request.method == 'GET':
         osoba = Osoba.objects.get(pk=pk)
@@ -21,12 +27,15 @@ def osoba_detail(request, pk):
 
 @api_view(['PUT'])
 @authentication_classes([SessionAuthentication, BasicAuthentication])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated, DjangoModelPermissions])
 def osoba_update(request, pk):
     try:
         osoba = Osoba.objects.get(pk=pk)
     except Osoba.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if osoba.wlasciciel != request.user:
+        raise PermissionDenied("Nie masz uprawnień do edytowania tego obiektu.")
 
     if request.method == 'PUT':
         serializer = OsobaSerializer(osoba, data=request.data)
@@ -37,12 +46,15 @@ def osoba_update(request, pk):
 
 @api_view(['DELETE'])
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated, DjangoModelPermissions])
 def osoba_delete(request, pk):
     try:
         osoba = Osoba.objects.get(pk=pk)
     except Osoba.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if osoba.wlasciciel != request.user:
+        raise PermissionDenied("Nie masz uprawnień do usunięcia tego obiektu.")
 
     if request.method == 'DELETE':
         osoba.delete()
