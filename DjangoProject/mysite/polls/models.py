@@ -54,6 +54,10 @@ class Osoba(models.Model):
         inne = 3, 'Inne'
     class Meta:
         ordering = ['nazwisko']
+        permissions = [
+            (
+            "can_view_other_persons", "Pozwala wyświetlać obiekty modelu Osoba, których użytkownik nie jest właścicielem."),
+        ]
 
     imie = models.CharField(max_length=60, blank=False, null=False)
     nazwisko = models.CharField(max_length=60, blank=False, null=False)
